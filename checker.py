@@ -1,6 +1,5 @@
 class Checker:
     def __init__(self, name, color, x, y):
-        self.name = name
         self.color = color
         self.dead = False
         self.x = x
