@@ -1,4 +1,4 @@
-import checker
+from checker import *
 
 class Board:
     def __init__(self):
@@ -11,10 +11,10 @@ class Board:
         for i in range(3):
             for j in range(4):
                 if i == 0 or i == 2:
-                    self.pieces.append(Checker(k, "black", 1+(2*j), 7-i)
+                    self.pieces.append(Checker(k, "black", 1+(2*j), 7-i))
                     k += 1
                 if i == 1:
-                    self.pieces.append(Checker(k, "black", (2*j), 7-i)
+                    self.pieces.append(Checker(k, "black", (2*j), 7-i))
                     k += 1
 
         
@@ -25,8 +25,9 @@ class Board:
         for i in range(3):
             for j in range(4):
                 if i == 0 or i == 2:
-                    self.pieces.append(Checker(k, "red", 1+(2*j), 2-i)
+                    self.pieces.append(Checker(k, "red", 0+(2*j), 2-i))
                     k += 1
                 if i == 1:
-                    self.pieces.append(Checker(k, "red", (2*j), 2-i)
+                    self.pieces.append(Checker(k, "red", 1+(2*j), 2-i))
                     k += 1
+

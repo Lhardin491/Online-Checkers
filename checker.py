@@ -1,20 +1,23 @@
 class Checker:
-    def __init__(self, color, x, y):
+    def __init__(self, name, color, x, y):
+        self.name = name
         self.color = color
-        self.dead = false
+        self.dead = False
         self.x = x
         self.y = y
-        self.king = false
+        self.king = False
 
     def kill(self):
-        self.dead = true
+        self.dead = True
         
     def set_pos(self, x, y):
         self.x = x
         self.y = y
 
     def king(self):
-        king = true
+        king = True
 
-
+    def __repr__(self):
+        s = "({}, {}) ".format(self.x, self.y) 
+        return s
 
