@@ -33,4 +33,3 @@ class Board:
                 if i == 1:
                     self.pieces.append(Checker(k, "red", 1+(2*j), 2-i))
                     k += 1
-
