@@ -2,5 +2,6 @@ from board import *
 
 
 board = Board()
-board.reset()
+board.set_red_pieces()
+board.set_black_pieces()
 print(board.pieces)

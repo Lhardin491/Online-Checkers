@@ -1,9 +1,9 @@
 from checker import *
-import itertools
+import collections
 
 class Board:
     def __init__(self):
-        self.pieces = {}
+        self.pieces = collections.OrderedDict()
 
     def set_black_pieces(self):
         i = 0
@@ -12,8 +12,8 @@ class Board:
         for i in range(3):
             for j in range(4):
                 if i == 0 or i == 2:
-                    x = 1+(j*2)
-                    y = i
+                    x = 1+(2*j)
+                    y = 7-i
                     self.pieces[(x, y)] = (Checker(k, "black", x, y))
                     k += 1
                 if i == 1:
@@ -30,12 +30,11 @@ class Board:
             for j in range(4):
                 if i == 0 or i == 2:
                     x = (2*j)
-                    y = 5+i
+                    y = 2-i
                     self.pieces[(x, y)] = (Checker(k, "red", x, y))
                     k += 1
                 if i == 1:
                     x = 1+(2*j)
-                    Y = 5+i
+                    y = 2-i
                     self.pieces[(x, y)] = (Checker(k, "red", x, y))
                     k += 1
-
