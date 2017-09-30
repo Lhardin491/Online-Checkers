@@ -7,7 +7,7 @@
     <title></title>
   </head>
   <body>
-    <div id="containter">
+    <section class="container">
       <div class="redSquare"></div>
       <div class="blackSquare"></div>
       <div class="redSquare"></div>
@@ -46,6 +46,6 @@
       <div class="blackSquare"></div>
       <div class="redSquare"></div>
       <div class="blackSquare"></div>
-    </div>
+    </section>
   </body>
 </html>
