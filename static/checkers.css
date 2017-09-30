@@ -1,0 +1,28 @@
+#container{
+  max-width: 600px;
+  max-height: 600px;
+  min-width: 30%;
+  min-height: 30%;
+  display: flex;
+  position: relative;
+}
+
+p{
+  text-align: center;
+}
+
+.redSquare{
+  height: 100px;
+  width:100px;
+  background: red;
+  border-color:red;
+  border-width: thick;
+}
+
+.blackSquare{
+  height: 100px;
+  width: 100px;
+  background: black;
+  border-color: black;
+  border-width: thick;
+}
