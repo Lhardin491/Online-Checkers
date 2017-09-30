@@ -1,11 +1,7 @@
-from flask import Flask, url_for
-app = Flask(__name__)
+import pyglet
 
-@app.route('/')
-def hello_world():
-    with app.open_resource('recourses/HTML') as f:
-        index = f.read()
-        return index
+if __name__ == '__main__':
+    window = pyglet.window.Window()
+    pyglet.app.run()
 
-with app.test_request_context():
-    url_for('static', filename='checkers.css')
+
