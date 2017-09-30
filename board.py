@@ -1,8 +1,9 @@
 from checker import *
+import itertools
 
 class Board:
     def __init__(self):
-        self.pieces = []
+        self.pieces = {}
 
     def set_black_pieces(self):
         i = 0
@@ -11,7 +12,9 @@ class Board:
         for i in range(3):
             for j in range(4):
                 if i == 0 or i == 2:
-                    self.pieces.append(Checker(k, "black", 1+(2*j), 7-i))
+                    x = 1+(2*j)
+                    y = 7-i
+                    self.pieces[(x, y)] = (Checker(k, "black", 1+(2*j), 7-i))
                     k += 1
                 if i == 1:
                     self.pieces.append(Checker(k, "black", (2*j), 7-i))
