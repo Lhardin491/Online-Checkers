@@ -140,22 +140,16 @@ class GameState:
         self.strat = -1
 
 def choices(seq, weights=None, k=1):
-    new_pop = []
-    for i in range(k):
-        new_pop.append(random.choice(seq))
-    return new_pop
-    """
-    g = min(weights)
-    limit = sum(map(lambda x: x + g + 1, weights))
-    print("DASDSADA")
-    print(weights)
-    print(limit)
-    stuff = [] 
-    for i in range(k):
-        num = random.randrange(limit)
-        index = list(itertools.filterfalse(lambda b: b[0] > num, zip(weights, range(len(weights)))))[-1][1]
-        stuff.append(index)
+    assert len(weights) == len(seq)
+    sample = []
+    yep = []
+    for weight, i in zip(weights, range(len(seq))):
+        for m in range(weight):
+            sample.append(seq[i])
+    
+    for h in range(k):
+       bb = random.choice(sample) 
+       yep.append(bb)
 
-    return stuff
-    """
+    return yep
 
