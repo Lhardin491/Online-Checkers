@@ -5,6 +5,7 @@ class Checker:
         self.x = x
         self.y = y
         self.king = False
+        self.name = name
 
     def kill(self):
         self.dead = True

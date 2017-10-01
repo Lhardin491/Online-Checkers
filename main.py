@@ -77,7 +77,9 @@ def on_mouse_release(x, y, button, modifiers):
         board_x, board_y = screen_to_board(x, y)
         print("{}, {}".format(board_x, board_y))
         if 0 <= board_x < 8 and 0 <= board_y < 8:
-            state.gen_valid_moves(board_x, board_y)
+            state.do_stuff(board_x, board_y)
+            if state.is_valid(board_x, board_y):
+                state.move_checker(board_x, board_y)
 
 
 pyglet.app.run()
