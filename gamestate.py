@@ -65,7 +65,27 @@ class GameState:
         ai_checkers = []
         for checker in self.board.pieces.values():
             ai_checkers.append((checker.x, checker.y, True if checker.color == "black" else False))
-
+        valid_moves = []
+        move = None
+        kill = None
         name, vector = self.move_strats[self.strat].get_move(ai_checkers)
+        done = False
+        while not done:
+            for checker in self.board.pieces.values():
+                if name == checker.name:
+                    valid_moves, hitlist = get_valid_moves(checker.x, checker.y)
+                    if vector > len(valid_moves) and len(valid_moves) > 0:
+                        move = valid_moves[vector // 2]
+                        kill = hitlist[vector // 2]
+                        done = True
+                    elif len(valid_moves) == 4:
+                        move = valid_moves[vector]
+                        kill = hitlist[vector]
+                        done = True
+                    else:
+                        name = name + 1 % 12
+                        break
+       self.name = name
+       self.move_checker(move[0], move[1], kill)
 
-         
+
