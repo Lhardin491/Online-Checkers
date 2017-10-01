@@ -1,9 +1,13 @@
 from board import *
 from genetics import *
+import random
+import itertools
+import collections
 
 class GameState:
     def __init__(self):
         self.num_strats = 6
+        self.mutate_chance = 0.01
         self.board = Board()
         self.board.set_red_pieces()
         self.board.set_black_pieces()
@@ -12,7 +16,7 @@ class GameState:
         self.name = -1
         self.turn = "black"
         self.move_strats = [MovementStrategy()] * self.num_strats
-        self.strat = 0
+        self.strat = -1
 
         for strat in self.move_strats:
             strat.generate()
@@ -40,6 +44,10 @@ class GameState:
     def move_checker(self, x, y, kill):
         for target in self.board.pieces.values():
             if target.name == kill:
+                if self.turn == "black":
+                    self.move_strats[self.strat].score -= 1
+                else:
+                    self.move_strats[self.strat].score += 2
                 del self.board.pieces[(target.x, target.y)]
                 break
 
@@ -62,6 +70,7 @@ class GameState:
             checker.is_king()
 
     def move_ai(self):
+        self.strat = (self.strat + 1) % self.num_strats
         ai_checkers = []
         for checker in self.board.pieces.values():
             ai_checkers.append((checker.x, checker.y, True if checker.color == "black" else False))
@@ -109,4 +118,44 @@ class GameState:
         if black_win or red_win:
             game_over = True
         return (game_over, black_win)
+
+
+    def next_round(self):
+        new_pop = []
+        breeders = choices(self.move_strats, weights=[x.score for x in self.move_strats], k=self.num_strats * 2)
+        print(breeders)
+        for breeder1, breeder2 in zip(itertools.islice(breeders, 0, None, 2), itertools.islice(breeders, 1, None, 2)):
+            offspring = breeder1.breed(breeder2)
+            offspring.mutate(self.mutate_chance)
+            self.mutate_chance += 0.01
+            new_pop.append(offspring)
+        self.move_strats = new_pop
+        self.board = Board()
+        self.board.set_red_pieces()
+        self.board.set_black_pieces()
+        self.valid_moves = []
+        self.hitlist = []
+        self.name = -1
+        self.turn = "black"
+        self.strat = -1
+
+def choices(seq, weights=None, k=1):
+    new_pop = []
+    for i in range(k):
+        new_pop.append(random.choice(seq))
+    return new_pop
+    """
+    g = min(weights)
+    limit = sum(map(lambda x: x + g + 1, weights))
+    print("DASDSADA")
+    print(weights)
+    print(limit)
+    stuff = [] 
+    for i in range(k):
+        num = random.randrange(limit)
+        index = list(itertools.filterfalse(lambda b: b[0] > num, zip(weights, range(len(weights)))))[-1][1]
+        stuff.append(index)
+
+    return stuff
+    """
 

@@ -5,6 +5,7 @@ import collections
 class MovementStrategy:
     def __init__(self):
         self.mapping = collections.OrderedDict() 
+        self.score = 0
 
     def generate(self):
         for checker in itertools.product(range(8), range(8), [True, False]):

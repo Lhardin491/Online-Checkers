@@ -85,14 +85,26 @@ def on_mouse_release(x, y, button, modifiers):
             print(kill)
             if kill != -2:
                 state.move_checker(board_x, board_y, kill)
-                state.move_ai()
                 if state.wined()[0] and state.wined()[1]:
                     print("You Win")
                     state.next_round()
+                    return
                     
                 elif state.wined()[0]:
                     print("You Lose")
                     state.next_round()
+                    return
+
+                state.move_ai()
+                if state.wined()[0] and state.wined()[1]:
+                    print("You Win")
+                    state.next_round()
+                    return
+                    
+                elif state.wined()[0]:
+                    print("You Lose")
+                    state.next_round()
+                    return
                     
 
 pyglet.app.run()
