@@ -11,7 +11,7 @@ class MovementStrategy:
             self.mapping[checker] = random.randrange(12)
 
     def get_move(self, checkers):
-        sum(map(lambda c: self.mapping[c], checkers)) % 48
+        move = sum(map(lambda c: self.mapping[c], checkers)) % 48
         name = move % 12
         vector = move // 12
         return (name, vector)

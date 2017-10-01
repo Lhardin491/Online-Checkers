@@ -21,6 +21,6 @@ class Checker:
             self.king = True
 
     def __repr__(self):
-        s = "({}, {}) ".format(self.x, self.y) 
+        s = "({}, {}) $ {}".format(self.x, self.y, self.name)
         return s
 

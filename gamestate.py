@@ -69,23 +69,32 @@ class GameState:
         move = None
         kill = None
         name, vector = self.move_strats[self.strat].get_move(ai_checkers)
+        vector2 = -1
         done = False
         while not done:
+            print("Looking for {}", name)
             for checker in self.board.pieces.values():
+                print(checker)
                 if name == checker.name:
-                    valid_moves, hitlist = get_valid_moves(checker.x, checker.y)
-                    if vector > len(valid_moves) and len(valid_moves) > 0:
-                        move = valid_moves[vector // 2]
-                        kill = hitlist[vector // 2]
-                        done = True
-                    elif len(valid_moves) == 4:
-                        move = valid_moves[vector]
-                        kill = hitlist[vector]
+                    valid_moves, hitlist = self.board.get_valid_moves(checker.x, checker.y)
+                    vector2 = vector
+                    if len(valid_moves) > 0:
+                        while vector2 >= len(valid_moves):
+                            vector2 -= 1
+                            print("Vector2 => {}".format(vector2))
+                        move = valid_moves[vector2]
+                        kill = hitlist[vector2]
+                        print("Kill => {}".format(kill))
                         done = True
                     else:
-                        name = name + 1 % 12
+                        name = (name + 1) % 12
+                        print("Updated name to {}".format(name))
                         break
-       self.name = name
-       self.move_checker(move[0], move[1], kill)
+            if not done:
+                name = (name + 1) % 12
+
+
+        self.name = name
+        self.move_checker(move[0], move[1], kill)
 
 
