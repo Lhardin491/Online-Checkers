@@ -1,6 +1,9 @@
-# Offline-Checkers
-## Obviously
-As :b:anye :b:est said:
+# Lets Play Checkers
 
-> We're living in the future so
-> the present is our past.
+### What we have so far:
+- [x] basic checkerboard
+- [x] basic checkers
+- [x] ability to play
+- [x] AI controlled cheker pieces
+- [x] working game
+- [ ] fully functional AI learning \(crashes after 3 games\)
