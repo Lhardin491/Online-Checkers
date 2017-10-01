@@ -21,7 +21,7 @@ def on_draw():
     window.clear()
     draw_board()
     for checker in state.get_checkers():
-        draw_checker(checker.x, checker.y, checker.color)
+        draw_checker(checker.x, checker.y, checker.color, king=checker.king)
     for coordinate in state.get_ghosts():
         draw_checker(coordinate[0], coordinate[1], "red", ghost=True)
 
@@ -41,7 +41,7 @@ def draw_square(x, y, w, h, r, g, b):
         ,('c3B', [r, g, b] * 4)
         ) 
 
-def draw_checker(x, y, color, ghost=False):
+def draw_checker(x, y, color, ghost=False, king=False):
     draw_x, draw_y = board_to_screen(x, y) 
     if ghost:
         draw_color = (255, 255, 255)
@@ -51,6 +51,9 @@ def draw_checker(x, y, color, ghost=False):
         draw_color = (70, 70, 70)
 
     draw_circle(draw_x, draw_y, CHECKER_RADIUS, draw_color)
+
+    if king:
+        draw_circle(draw_x, draw_y, CHECKER_RADIUS // 2, (255, 0, 0) if color == 'black' else (70, 70, 70))
 
 def screen_to_board(x, y):
     board_x = (x - BOARD_OFFSET_X) // SQUARE_SIZE
