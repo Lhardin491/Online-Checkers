@@ -41,23 +41,35 @@ class Board:
 
     def get_valid_moves(self, x, y):
         coordinates = []
-        if self.pieces.get((x, y)) is not None:
-            if self.pieces[(x, y)].king == True:
-                coordinates = [(x+1, y+1), (x+1, y-1), (x+1, y-1),  (x-1, y+1)]
-                for i in coordinates:
-                    if self.pieces[i] is not None:
-                            coordinates.append(
-                    if i[0] > 7 or i[1] > 7 or i[0] < 0 or i[1] < 0:
-                        coordinates.remove(i)
+        coordinates2 = []
+        movement_vectors = []
+        checker = self.pieces.get((x, y))
+        if checker is None:
+            empty = []
+            return empty
+        if checker.color == "black":
+            movement_vectors.append((-1,-1))
+            movement_vectors.append((1,-1))
+            if checker.king:
+                movement_vectors.append((-1, 1))
+                movement_vectors.append((1,1))
+        if checker.color == "red":
+            movement_vectors.append((-1, 1))
+            movement_vectors.append((1, 1))
+            if checker.king:
+                movement_vectors.append((1, -1))
+                movement_vectors.append((-1, -1))
+        for i in movement_vectors:
+            t = (x+i[0], y+i[1])
+            if self.pieces.get(t) is not None:
+                t = (x+i[0]+i[0], x+i[1]+i[1])
+                if self.pieces.get(t) is None:
+                    coordinates.append(t)
             else:
-                if self.pieces[(x,y)].color == "black":
-                    coordinates = [(x-1, y-1), (x+1, y-1)]
-                    for i in coordinates:
-                         if i[0] > 7 or i[1] > 7 or i[0] < 0 or i[1] < 0:
-                            coordinates.remove(i)
-                elif self.pieces[(x, y)].color == "red":
-                    coordinates = [(x-1, y+1), (x+1, y+1)]
-                    for i in coordinates:
-                         if i[0] > 7 or i[1] > 7 or i[0] < 0 or i[1] < 0:
-                            coordinates.remove(i)
-        return coordinates
+                coordinates.append(t)
+        for i in coordinates:
+            if i[0] > 7 or i[1] > 7 or i[0] < 0 or i[1] < 0:
+                pass
+            else:
+                coordinates2.append(i)
+        return coordinates2
