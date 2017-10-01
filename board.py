@@ -61,11 +61,11 @@ class Board:
                 movement_vectors.append((-1, -1))
         for i in movement_vectors:
             t = (x+i[0], y+i[1])
-            if self.pieces.get(t) is not None:
+            if self.pieces.get(t) is not None and self.pieces.get(t).color != self.pieces.get((x, y)).color:
                 t = (x+i[0]+i[0], x+i[1]+i[1])
                 if self.pieces.get(t) is None:
                     coordinates.append(t)
-            else:
+            elif self.pieces.get(t) is None:
                 coordinates.append(t)
         for i in coordinates:
             if i[0] > 7 or i[1] > 7 or i[0] < 0 or i[1] < 0:

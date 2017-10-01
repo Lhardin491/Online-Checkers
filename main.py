@@ -1,6 +1,8 @@
 import pyglet
 from pyglet.gl import *
 from math import degrees, cos, sin
+from board import *
+from gamestate import *
 
 WINDOW_WIDTH = 900
 WINDOW_HEIGHT = 900
@@ -12,15 +14,16 @@ CHECKER_RADIUS = (SQUARE_SIZE - 10) // 2
 
 config = pyglet.gl.Config(alpha_size=8, double_buffer=True)
 window = pyglet.window.Window(config=config, width=WINDOW_WIDTH, height=WINDOW_HEIGHT)
+state = GameState()
 
 @window.event
 def on_draw():
     window.clear()
     draw_board()
-    draw_checker(0, 0, 'red')
-    draw_checker(0, 1, 'black')
-    draw_checker(0, 2, 'red', ghost=True)
-    draw_checker(0, 3, 'black', ghost=True)
+    for checker in state.get_checkers():
+        draw_checker(checker.x, checker.y, checker.color)
+    for coordinate in state.get_ghosts():
+        draw_checker(coordinate[0], coordinate[1], "red", ghost=True)
 
 def draw_board():
     for i in range(8):
@@ -45,7 +48,7 @@ def draw_checker(x, y, color, ghost=False):
     elif color == 'red':
         draw_color = (255, 0, 0)
     elif color == 'black':
-        draw_color = (0, 0, 0)
+        draw_color = (70, 70, 70)
 
     draw_circle(draw_x, draw_y, CHECKER_RADIUS, draw_color)
 
@@ -74,7 +77,7 @@ def on_mouse_release(x, y, button, modifiers):
         board_x, board_y = screen_to_board(x, y)
         print("{}, {}".format(board_x, board_y))
         if 0 <= board_x < 8 and 0 <= board_y < 8:
-            # moves = get_valid_moves(board_x, board_y) 
-            ...
+            state.gen_valid_moves(board_x, board_y)
+
 
 pyglet.app.run()
