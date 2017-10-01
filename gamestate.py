@@ -1,7 +1,9 @@
 from board import *
+from genetics import *
 
 class GameState:
     def __init__(self):
+        self.num_strats = 6
         self.board = Board()
         self.board.set_red_pieces()
         self.board.set_black_pieces()
@@ -9,6 +11,11 @@ class GameState:
         self.hitlist = []
         self.name = -1
         self.turn = "black"
+        self.move_strats = [MovementStrategy()] * self.num_strats
+        self.strat = 0
+
+        for strat in self.move_strats:
+            strat.generate()
 
     def is_valid(self, x, y):
         print (self.valid_moves)
@@ -53,3 +60,12 @@ class GameState:
 
         for checker in self.board.pieces.values():
             checker.is_king()
+
+    def move_ai(self):
+        ai_checkers = []
+        for checker in self.board.pieces.values():
+            ai_checkers.append((checker.x, checker.y, True if checker.color == "black" else False))
+
+        name, vector = self.move_strats[self.strat].get_move(ai_checkers)
+
+         

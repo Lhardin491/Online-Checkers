@@ -8,10 +8,13 @@ class MovementStrategy:
 
     def generate(self):
         for checker in itertools.product(range(8), range(8), [True, False]):
-            self.mapping[checker] = random.randrange(5)
+            self.mapping[checker] = random.randrange(12)
 
     def get_move(self, checkers):
-        return sum(map(lambda c: self.mapping[c], checkers)) % 24
+        sum(map(lambda c: self.mapping[c], checkers)) % 48
+        name = move % 12
+        vector = move // 12
+        return (name, vector)
 
     def breed(self, other):
         crosspoint = random.randrange(len(self.mapping))
