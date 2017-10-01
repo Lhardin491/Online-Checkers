@@ -14,8 +14,11 @@ class Checker:
         self.x = x
         self.y = y
 
-    def king(self):
-        king = True
+    def is_king(self):
+        if self.color == "red" and self.y == 7:
+            self.king = True
+        elif self.color == "black" and self.y == 0:
+            self.king = True
 
     def __repr__(self):
         s = "({}, {}) ".format(self.x, self.y) 

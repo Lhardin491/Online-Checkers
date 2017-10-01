@@ -78,8 +78,10 @@ def on_mouse_release(x, y, button, modifiers):
         print("{}, {}".format(board_x, board_y))
         if 0 <= board_x < 8 and 0 <= board_y < 8:
             state.do_stuff(board_x, board_y)
-            if state.is_valid(board_x, board_y):
-                state.move_checker(board_x, board_y)
+            kill = state.is_valid(board_x, board_y)
+            print(kill)
+            if kill != -2:
+                state.move_checker(board_x, board_y, kill)
 
 
 pyglet.app.run()
