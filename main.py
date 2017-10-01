@@ -79,7 +79,7 @@ def on_mouse_release(x, y, button, modifiers):
     if button == pyglet.window.mouse.LEFT:
         board_x, board_y = screen_to_board(x, y)
         print("{}, {}".format(board_x, board_y))
-        if 0 <= board_x < 8 and 0 <= board_y < 8 and state.turn == "black":
+        if 0 <= board_x < 8 and 0 <= board_y < 8:
             state.do_stuff(board_x, board_y)
             kill = state.is_valid(board_x, board_y)
             print(kill)

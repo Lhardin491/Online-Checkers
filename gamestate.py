@@ -31,7 +31,7 @@ class GameState:
             return -2
 
     def do_stuff(self, x, y):
-        if self.board.pieces.get((x, y)) is not None:
+        if self.board.pieces.get((x, y)) is not None and self.board.pieces.get((x, y)).color == "black":
             self.name = self.board.pieces.get((x, y)).name
             self.valid_moves, self.hitlist = self.board.get_valid_moves(x, y)
        
