@@ -45,3 +45,6 @@ class GameState:
                 self.name = -1
                 self.hitlist = []
                 break
+
+        for checker in self.board.pieces.values():
+            checker.is_king()
