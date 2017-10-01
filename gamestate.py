@@ -97,4 +97,16 @@ class GameState:
         self.name = name
         self.move_checker(move[0], move[1], kill)
 
+    def wined(self):
+        black_win = True
+        red_win = True
+        game_over = False
+        for checker in self.board.pieces.values():
+            if checker.color == "black":
+                black_win = False
+            if checker.color == "red":
+                red_win = False
+        if black_win or red_win:
+            game_over = True
+        return (game_over, black_win)
 
