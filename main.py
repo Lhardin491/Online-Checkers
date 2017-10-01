@@ -10,7 +10,7 @@ BOARD_OFFSET_Y = (WINDOW_HEIGHT - BOARD_SIZE) // 2
 SQUARE_SIZE = BOARD_SIZE // 8
 CHECKER_RADIUS = (SQUARE_SIZE - 10) // 2
 
-config = pyglet.gl.Config(alpha_size=8)
+config = pyglet.gl.Config(alpha_size=8, double_buffer=True)
 window = pyglet.window.Window(config=config, width=WINDOW_WIDTH, height=WINDOW_HEIGHT)
 
 @window.event
@@ -35,14 +35,19 @@ def draw_square(x, y, w, h, r, g, b):
                  x + w, y,
                  x + w, y + h,
                  x, y + h))
-        ,('c4B', [r, g, b, 255] * 4)
+        ,('c3B', [r, g, b] * 4)
         ) 
 
 def draw_checker(x, y, color, ghost=False):
     draw_x, draw_y = board_to_screen(x, y) 
-    alpha = 100 if ghost else 255
-    color = (255, 0, 0, alpha) if color == 'red' else (70, 70, 70, alpha)
-    draw_circle(draw_x, draw_y, CHECKER_RADIUS, color)
+    if ghost:
+        draw_color = (255, 255, 255)
+    elif color == 'red':
+        draw_color = (255, 0, 0)
+    elif color == 'black':
+        draw_color = (0, 0, 0)
+
+    draw_circle(draw_x, draw_y, CHECKER_RADIUS, draw_color)
 
 def screen_to_board(x, y):
     board_x = (x - BOARD_OFFSET_X) // SQUARE_SIZE
@@ -60,7 +65,7 @@ def draw_circle(x, y, r, color):
         verticies.append(int(x + (r * cos(degrees(theta)))))
         verticies.append(int(y + (r * sin(degrees(theta)))))
 
-    pyglet.graphics.draw(len(verticies) // 2, pyglet.gl.GL_TRIANGLE_FAN, ('v2i', verticies), ('c4B', [*color] * (len(verticies) // 2)))
+    pyglet.graphics.draw(len(verticies) // 2, pyglet.gl.GL_TRIANGLE_FAN, ('v2i', verticies), ('c3B', [*color] * (len(verticies) // 2)))
 
 
 @window.event
