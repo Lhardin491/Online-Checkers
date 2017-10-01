@@ -141,10 +141,15 @@ class GameState:
 
 def choices(seq, weights=None, k=1):
     assert len(weights) == len(seq)
+    bias = min(weights)
+    if bias <= 0:
+        bias = (-bias) + 1
     sample = []
     yep = []
-    for weight, i in zip(weights, range(len(seq))):
+    print("weights={}".format(weights))
+    for weight, i in zip(map(lambda q: q + bias, weights), range(len(seq))):
         for m in range(weight):
+            print("Adding {}".format(seq[i]))
             sample.append(seq[i])
     
     for h in range(k):
