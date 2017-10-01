@@ -6,7 +6,7 @@ import collections
 
 class GameState:
     def __init__(self):
-        self.num_strats = 6
+        self.num_strats = 3
         self.mutate_chance = 0.01
         self.board = Board()
         self.board.set_red_pieces()
@@ -17,6 +17,8 @@ class GameState:
         self.turn = "black"
         self.move_strats = [MovementStrategy()] * self.num_strats
         self.strat = -1
+        self.generation =0
+        print("------- Generation {} --------".format(self.generation))
 
         for strat in self.move_strats:
             strat.generate()
@@ -80,7 +82,8 @@ class GameState:
         name, vector = self.move_strats[self.strat].get_move(ai_checkers)
         vector2 = -1
         done = False
-        while not done:
+        failsafe = 15
+        while not done and failsafe > 0:
             print("Looking for {}", name)
             for checker in self.board.pieces.values():
                 print(checker)
@@ -101,7 +104,11 @@ class GameState:
                         break
             if not done:
                 name = (name + 1) % 12
+                failsafe -= 1
 
+        if failsafe <= 0:
+            self.turn = "black"
+            return
 
         self.name = name
         self.move_checker(move[0], move[1], kill)
@@ -127,7 +134,7 @@ class GameState:
         for breeder1, breeder2 in zip(itertools.islice(breeders, 0, None, 2), itertools.islice(breeders, 1, None, 2)):
             offspring = breeder1.breed(breeder2)
             offspring.mutate(self.mutate_chance)
-            self.mutate_chance += 0.01
+            self.mutate_chance += 0.005
             new_pop.append(offspring)
         self.move_strats = new_pop
         self.board = Board()
@@ -138,6 +145,8 @@ class GameState:
         self.name = -1
         self.turn = "black"
         self.strat = -1
+        self.generation += 1
+        print("------- Generation {} --------".format(self.generation))
 
 def choices(seq, weights=None, k=1):
     assert len(weights) == len(seq)
