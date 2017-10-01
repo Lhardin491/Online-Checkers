@@ -1,3 +1,5 @@
+# our board class that dows most of the work
+
 from checker import *
 import collections
 
@@ -38,7 +40,7 @@ class Board:
                     y = 2-i
                     self.pieces[(x, y)] = (Checker(k, "red", x, y))
                     k += 1
-
+# generates the valid move options to be used by the gamestate class
     def get_valid_moves(self, x, y):
         coordinates = []
         coordinates2 = []
