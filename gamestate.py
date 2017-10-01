@@ -8,6 +8,7 @@ class GameState:
         self.valid_moves = []
         self.hitlist = []
         self.name = -1
+        self.turn = "black"
 
     def is_valid(self, x, y):
         print (self.valid_moves)
@@ -41,6 +42,10 @@ class GameState:
                 self.board.pieces[(x, y)] = checker
                 del self.board.pieces[(checker.x, checker.y)]
                 checker.set_pos(x, y)
+                if self.turn == "black":
+                    self.turn = "red"
+                else:
+                    self.turn = "black"
                 self.valid_moves = []
                 self.name = -1
                 self.hitlist = []
